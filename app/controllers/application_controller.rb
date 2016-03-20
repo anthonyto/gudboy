@@ -8,16 +8,10 @@ class ApplicationController < ActionController::API
     render json: { error: 'Not Authorized' }, status: :unauthorized
   end
   
-  rescue_from AuthenticationTimeoutError do 
-    render json: { error: 'Token Is Expired' }, status: 419
-  end
-  
   private
   
   def authenticate_request
-    if auth_token_expired?
-      fail AuthenticationTimeoutError
-    else !@current_user
+    if !@current_user
       fail NotAuthenticatedError
     end
   end
@@ -42,7 +36,7 @@ class ApplicationController < ActionController::API
   
   def set_user
     if decoded_auth_token
-      @user ||= User.find_by_token
+      @user ||= User.find_by_token(decoded_auth_token)
     end
   end
   

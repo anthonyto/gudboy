@@ -1,4 +1,5 @@
 require 'jwt'
+require 'decoded_auth_token'
 
 class AuthToken
   def self.encode(payload)
@@ -6,7 +7,7 @@ class AuthToken
   end
   
   def self.decode(token)
-    JWT.decode(token, Rails.application.secrets.secret_key_base)
+    payload = JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
     DecodedAuthToken.new(payload)
   rescue
     nil
