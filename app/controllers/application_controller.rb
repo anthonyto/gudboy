@@ -1,5 +1,8 @@
+require 'exceptions'
+require 'auth_token'
+
 class ApplicationController < ActionController::API
-  before_action :set_current_user, :authenticate_request
+  before_action :set_user, :authenticate_request
   
   rescue_from NotAuthenticatedError do 
     render json: { error: 'Not Authorized' }, status: :unauthorized
@@ -28,12 +31,18 @@ class ApplicationController < ActionController::API
   end
   
   def http_auth_header_content
-    @http_auth_header_content ||= request.headers['Authorization'].split(' ').last ? request.headers['Authorization'].present? | nil
+    @http_auth_header_content = begin
+      if request.headers['Authorization'].present?
+       request.headers['Authorization'].split(' ').last
+     else
+       nil
+     end
+   end
   end
   
-  def set_current_user
+  def set_user
     if decoded_auth_token
-      @current_user ||= User.find_by_token
+      @user ||= User.find_by_token
     end
   end
   

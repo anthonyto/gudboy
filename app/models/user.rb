@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
     AuthToken.encode(payload)
   end
   
-  def find_by_credentials(email, password)
+  def self.find_by_credentials(email, password)
     User.find_by(email: email, password: password)
   end
   
-  def find_by_token(decoded_auth_token)
-    USer.find(decoded_auth_token[:user_id])
+  def self.find_by_token(decoded_auth_token)
+    User.find(decoded_auth_token[:user_id])
   end
   
 end

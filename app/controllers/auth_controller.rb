@@ -9,5 +9,4 @@ class AuthController < ApplicationController
       render json: { error: "Invalid email or password" }, status: :unauthorized
     end
   end
-  
 end
