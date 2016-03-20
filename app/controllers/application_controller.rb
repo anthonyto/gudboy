@@ -11,7 +11,7 @@ class ApplicationController < ActionController::API
   private
   
   def authenticate_request
-    if !@current_user
+    if !@user
       fail NotAuthenticatedError
     end
   end
@@ -35,6 +35,7 @@ class ApplicationController < ActionController::API
   end
   
   def set_user
+    byebug
     if decoded_auth_token
       @user ||= User.find_by_token(decoded_auth_token)
     end
