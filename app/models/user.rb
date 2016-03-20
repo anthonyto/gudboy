@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  validates :email, uniqueness: true
   
   def generate_auth_token
     payload = { user_id: id }
