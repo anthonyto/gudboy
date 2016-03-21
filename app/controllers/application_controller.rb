@@ -35,7 +35,6 @@ class ApplicationController < ActionController::API
   end
   
   def set_user
-    byebug
     if decoded_auth_token
       @user ||= User.find_by_token(decoded_auth_token)
     end
