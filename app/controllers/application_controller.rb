@@ -16,12 +16,8 @@ class ApplicationController < ActionController::API
     end
   end
   
-  def auth_token_expired?
-    decoded_auth_token && decoded_auth_token.expired?
-  end
-  
-  def decoded_auth_token
-    @decoded_auth_token || AuthToken.decode(http_auth_header_content)
+  def decode_auth_token
+    @decoded_auth_token ||= AuthToken.decode(http_auth_header_content)
   end
   
   def http_auth_header_content
@@ -35,8 +31,8 @@ class ApplicationController < ActionController::API
   end
   
   def set_user
-    if decoded_auth_token
-      @user ||= User.find_by_token(decoded_auth_token)
+    if decode_auth_token
+      @user ||= User.find_by_token(@decoded_auth_token)
     end
   end
   

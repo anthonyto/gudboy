@@ -9,9 +9,8 @@ class CategoriesController < ApplicationController
   end
   
   def create
-    # TODO refactor this
-    category_params[:user_id] = @user.id
     @category = Category.new(category_params)
+    @category.set_user_id(@decoded_auth_token)
     if @category.save
       render json: @category, status: :created
     else
@@ -33,6 +32,6 @@ class CategoriesController < ApplicationController
     end
     
     def set_category
-      @category = @@user.categories.where(params[:id])
+      @category = @user.categories.where(params[:id])
     end
 end

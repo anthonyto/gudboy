@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
     User.find_by(email: email, password: password)
   end
   
-  def self.find_by_token(decoded_auth_token)
-    User.find(decoded_auth_token[:user_id])
+  def self.find_by_token(token)
+    User.find(token[:user_id])
   end
   
 end
