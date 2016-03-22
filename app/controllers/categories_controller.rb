@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:show, :update]
   
   def index
-    @user.categories
+    @categories = @user.categories
   end
   
   def show
