@@ -32,6 +32,6 @@ class CategoriesController < ApplicationController
     end
     
     def set_category
-      @category = @user.categories.where(params[:id])
+      @category = @user.categories.find(params[:id])
     end
 end
