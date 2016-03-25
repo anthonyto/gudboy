@@ -5,7 +5,6 @@ describe UsersController do
     let(:user){ FactoryGirl.create(:user) }
     it 'should send user' do
       get :show, id: user
-      byebug
       expect(assigns(:user)).to eq user
     end
   end
