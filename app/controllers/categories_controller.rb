@@ -10,7 +10,7 @@ class CategoriesController < ApplicationController
   
   def create
     @category = Category.new(category_params)
-    @category.set_user_id(@decoded_auth_token)
+    @category.set_user_id(@user)
     if @category.save
       render json: @category, status: :created
     else

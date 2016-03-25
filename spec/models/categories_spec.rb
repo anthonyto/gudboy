@@ -8,6 +8,7 @@ describe Category do
       let(:user){ FactoryGirl.create(:user) }
       it "assigns the corret user_id" do
         category.set_user_id(user)
+        category.save
         expect(category.user_id).to eq user.id
       end
     end
