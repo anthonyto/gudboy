@@ -63,6 +63,7 @@ describe "User management" do
       it { expect(response.body).to include "updated_first_name", "updated_last_name", "updated_email@bar.com", "updated_password", "100" }
     end
     context "with invalid params" do
+      # Do we need these cases or are they properly captured in user_spec?
       context "with existing email" do
         before do
           other_user = FactoryGirl.create(:user, email: Faker::Internet.email)
@@ -80,9 +81,8 @@ describe "User management" do
         end
         it { expect(response.content_type).to eq "application/json" }
         it { expect(response).to have_http_status :unprocessable_entity }
-        it { expect(response.body).to include "budget", "must be a number greater than or equal to 0" }
+        it { expect(response.body).to include "budget", "is not a number" }
       end
-      
     end
   end
 end

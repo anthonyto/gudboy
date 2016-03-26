@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
+  validates :first_name, :last_name, :email, :password, :budget, presence: true
   validates :email, uniqueness: true
-  # Add numericality budget
+  validates :budget, numericality: { greater_than_or_equal_to: 0 }
+  
   has_many :categories
   
   def generate_auth_token
