@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   validates :email, uniqueness: true
+  # Add numericality budget
   has_many :categories
   
   def generate_auth_token
