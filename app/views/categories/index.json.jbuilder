@@ -1,3 +1,3 @@
 json.array!(@categories) do |category|
-  json.extract! category, ::name
+  json.extract! category, :id, :name
 end

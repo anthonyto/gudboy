@@ -2,6 +2,24 @@ require "rails_helper"
 
 describe "User management" do 
   let(:user) { FactoryGirl.create(:user) }
+  
+  describe "show a user" do
+    context "with a token" do
+      before do 
+        get "/user", nil, { "Authorization" => retrieve_token(user) }
+      end
+      it { expect(response.content_type).to eq "application/json" }
+      it { expect(response).to have_http_status :ok }
+      it { expect(response.body).to include "id", "#{user.id}"}
+    end
+    context "without a token" do
+      before { get "/user" }
+      it { expect(response.content_type).to eq "application/json" }
+      it { expect(response).to have_http_status :unauthorized }
+      it { expect(response.body).to include "Not Authorized" }
+    end
+  end
+  
   describe "create user" do
     user_params = {
       user: {
@@ -26,23 +44,6 @@ describe "User management" do
       it { expect(response.content_type).to eq "application/json" }
       it { expect(response).to have_http_status :unprocessable_entity }
       it { expect(response.body).to include "email", "has already been taken" }
-    end
-  end
-  
-  describe "show a user" do
-    context "with a token" do
-      before do 
-        get "/user", nil, { "Authorization" => retrieve_token(user) }
-      end
-      it { expect(response.content_type).to eq "application/json" }
-      it { expect(response).to have_http_status :ok }
-      it { expect(response.body).to include "id", "#{user.id}"}
-    end
-    context "without a token" do
-      before { get "/user" }
-      it { expect(response.content_type).to eq "application/json" }
-      it { expect(response).to have_http_status :unauthorized }
-      it { expect(response.body).to include "Not Authorized" }
     end
   end
   

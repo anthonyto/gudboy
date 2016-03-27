@@ -22,6 +22,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
   
+  # why isn't this working
   config.profile_examples = false
 
 # The settings below are suggested to provide a good initial experience
